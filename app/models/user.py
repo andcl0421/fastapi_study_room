@@ -8,8 +8,8 @@ class Base(DeclarativeBase):
     pass
 
 if TYPE_CHECKING:
-    from .reservation import Reservation
-    from .review import Review
+    from app.models.reservation import Reservation
+    from app.models.review import Review
 
 class User(Base):
     __tablename__ = "users"
