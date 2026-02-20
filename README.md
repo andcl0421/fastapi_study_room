@@ -34,7 +34,7 @@
 
 ## 3.  설계 및 구조 (Architecture)
 
-![ERD 설계도](./app/docs/images/erd-1.0.png)
+![ERD 설계도](./app/docs/images/erd-1.0.PNG)
 
 ### 3.1 Layered Architecture
 * **Router → Service → Repository → Model**로 이어지는 4계층 구조를 채택했습니다.
