@@ -14,7 +14,7 @@ class Reservation(Base):
 
     reservation_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False
+        ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False #외래키를 갖고 있는 쪽이 ondelete="CASCADE" 설정
     )
     room_id: Mapped[int] = mapped_column(
         ForeignKey("study_rooms.room_id", ondelete="CASCADE"), nullable=False

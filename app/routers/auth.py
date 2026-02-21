@@ -16,7 +16,7 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
     description="새로운 사용자를 등록하고 정보를 반환합니다."
 )
 async def signup(data: UserCreate, db: AsyncSession = Depends(get_db)):
-    # 💡 비동기 함수이므로 앞에 async를 붙이고, 내부에서 await를 사용해야 합니다.
+    # 💡 비동기 함수이므로 앞에 async를 붙이고, 내부에서 await를 사용
     return await auth_service.signup(db, data)
 
 @router.post(
@@ -26,6 +26,6 @@ async def signup(data: UserCreate, db: AsyncSession = Depends(get_db)):
     description="학번과 비밀번호로 로그인하여 토큰을 발급받습니다."
 )
 async def login(data: UserLogin, db: AsyncSession = Depends(get_db)):
-    # 서비스 계층에서도 비동기 처리가 필요합니다.
+    # 서비스 계층에서도 비동기 처리가 필요
     token_data = await auth_service.login(db, data)
     return token_data

@@ -5,6 +5,12 @@ from passlib.context import CryptContext
 from ..models.user import User
 from ..repositories.user_repo import user_repo
 from ..schemas.user import UserCreate, UserLogin
+# from jose import jwt
+# from config import ACCESS_TOKEN_EXPIRE_MINUTES, SECRET_KEY, ALGORITHM
+
+# ACCESS_TOKEN_EXPIRE_MINUTES = 60
+# SECRET_KEY = "JWT_SECRET_KEY"
+# ALGORITHM = "HS256"
 
 # 1. 비밀번호 암호화 도구 (BCRYPT 알고리즘 사용)
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -19,7 +25,7 @@ class AuthService:
 
     # --- 회원가입 로직 ---
     async def signup(self, db: AsyncSession, data: UserCreate):
-        # 직접 쿼리 짜지 말고 레포지토리에게 물어봅니다!
+        # 직접 쿼리 짜지 말고 레포지토리에게 물어보기
         existing_user = await user_repo.get_user_by_student_number(db, data.student_number)
         if existing_user:
             raise HTTPException(status_code=400, detail="이미 등록된 학번입니다.")
@@ -30,20 +36,26 @@ class AuthService:
             password=self.hash_password(data.password)
         )
         
-        # 저장도 레포지토리에게 시킵니다!
+        # 저장도 레포지토리에게 시키기
         return await user_repo.create_user(db, new_user)
 
         # 2. 비밀번호 암호화 및 유저 생성
         new_user = User(
             student_number=data.student_number,
             user_name=data.user_name,
-            password=self.hash_password(data.password) # 암호화해서 저장!
+            password=self.hash_password(data.password) # 암호화해서 저장
         )
         
         db.add(new_user)
         await db.commit() # 실제 DB에 반영
         await db.refresh(new_user) # 생성된 ID 등을 다시 읽어옴
         return new_user
+    
+    # def create_access_token(self, user_id: int):
+    #     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    #     payload = {"sub": str(user_id), "exp": expire}
+    #     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+    #     return token
 
     # --- 로그인 로직 ---
     async def login(self, db: AsyncSession, data: UserLogin):

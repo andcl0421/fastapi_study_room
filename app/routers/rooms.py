@@ -13,7 +13,7 @@ router = APIRouter(prefix="/rooms", tags=["Rooms"])
 # 1. 모든 스터디룸 목록 조회
 @router.get("/", response_model=List[RoomResponse], summary="전체 스터디룸 목록 조회")
 async def get_all_rooms(db: AsyncSession = Depends(get_db)):
-    # 서비스에게 모든 방을 가져오라고 시킵니다.
+    # 서비스에게 모든 방을 가져오라고 시킴
     return await room_service.get_rooms(db)
 
 

@@ -6,7 +6,7 @@ from app.models.reservation import Reservation
 from app.schemas.reservation import ReservationCreate
 
 class ReservationRepository:
-    # 1. 예약 중복 확인 (실무 핵심 쿼리!)
+    # 1. 예약 중복 확인 (실무 핵심 쿼리)
     async def check_duplicate(self, db: AsyncSession, room_id: int, start: datetime, end: datetime):
         # 겹치는 조건: (기존 예약 시작 < 새 예약 종료) AND (기존 예약 종료 > 새 예약 시작)
         query = select(Reservation).where(

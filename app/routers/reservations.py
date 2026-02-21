@@ -23,5 +23,5 @@ async def get_my_reservations(student_number: str, db: AsyncSession = Depends(ge
 # 3. 예약 취소하기 (Delete)
 @router.delete("/{reservation_id}", summary="예약 취소")
 async def cancel_reservation(reservation_id: int, db: AsyncSession = Depends(get_db)):
-    # "앗, 일정이 생겨서 취소할게요!"
+    # "앗, 일정이 생겨서 취소할게요"
     return await reservation_service.cancel_reservation_service(db, reservation_id)
