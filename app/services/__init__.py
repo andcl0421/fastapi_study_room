@@ -7,5 +7,6 @@ __all__ = [
     "auth_service",
     "user_service",
     "room_service",
-    "reservation_service"
+    "reservation_service" ,
+    "review_service"
 ]
